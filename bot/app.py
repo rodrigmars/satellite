@@ -1,5 +1,6 @@
 
 import os
+from infra.db_models.db_base import get_connection, init_db
 
 from discord import Client, Intents, Guild, Game
 from discord.message import Message
@@ -7,7 +8,12 @@ from discord.message import Message
 from dotenv import load_dotenv
 from land_mining import message_mining, InvalidMessageError
 from operator_discord import get_total_occurrences, kill_message, send_blacklist, notify_message
+
+
 load_dotenv()
+
+DB_FILE = 'satellite.db'
+
 
 intents = Intents.default()
 # intents.messages = True
@@ -65,4 +71,11 @@ async def on_message(message: Message):
 
 if __name__ == "__main__":
 
-    client.run(os.environ['TOKEN'])
+    try:
+
+        init_db(get_connection(DB_FILE))
+
+        client.run(os.environ['TOKEN'])
+
+    except Exception as e:
+        print(e)

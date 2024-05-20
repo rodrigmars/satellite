@@ -11,13 +11,10 @@ async def kill_message(message: Message) -> None:
     try:
 
         await message.delete()
-        print("Mesangem excluída")
 
     except HTTPException as ex:
-        print("ERRROOO>>>", ex)
+        print(ex)
         print(f"Unable to delete message {message.id}")
-
-    # await message.delete()
 
 
 async def get_total_occurrences(author: User | Member) -> int:
