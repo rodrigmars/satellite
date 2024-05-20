@@ -33,14 +33,12 @@ async def on_message(message: Message):
 
     print(f'New message -> {message_author} said: {message_content}')
 
-    # message = "[steamcommunity.com/gift/summer](https://u.to/ZwKuIA)"
-    # message = "Lorem ipsum dolor sit https://u.to/ZwKuIA amet. Cum reprehenderit mollitia sit reprehenderit repudiandae cum ratione harum et nulla dignissimos et temporibus quaerat. Ad impedit quis cum sint exercitationem ad ducimus iure ut veritatis corrupti. Et magni omnis aut nesciunt aperiam et minus illo et beatae officiis et doloremque maiores et veniam facilis."
+    if message.author == client.user:
+        return
 
     try:
 
-        check_message = await message_mining(message_content)
-
-        await check_message()
+        message_mining(message_content)()
 
     except InvalidMessageError as ex:
 
@@ -48,7 +46,7 @@ async def on_message(message: Message):
 
         if await get_total_occurrences(message_author) >= 5:
             await send_blacklist(message)
-            return
+            # return
 
         await notify_message(message, ex.message)
 

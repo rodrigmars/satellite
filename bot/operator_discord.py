@@ -29,5 +29,6 @@ async def check_author(author: str):
 
 
 async def notify_message(message: Message, notify: str) -> None:
-    print(
-        "Banimento realizado para conta [ AGENTE-ESPERTALHAO ] - Motivo: Número de tentativas excedido.")
+    # print(
+    #     "Banimento realizado para conta [ AGENTE-ESPERTALHAO ] - Motivo: Número de tentativas excedido.")
+    await message.channel.send(f"{message.author.mention} **Aviso**, este canal não permite o envio de conteúdo classificado como spam. Risco de bloqueio após três tentativas.")

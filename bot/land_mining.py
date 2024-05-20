@@ -1,4 +1,4 @@
-from utils import get_words, check_url
+from utils import get_all_links, get_domain
 from enum import Enum
 
 
@@ -19,33 +19,31 @@ class InvalidMessageError(Exception):
         return self.message
 
 
-async def message_mining(message):
+def message_mining(message):
 
-    domains = ["https://www.youtube.com/",
-               "https://stackoverflow.com/",
-               "https://stackoverflow.blog/",
-               "https://github.com/",
-               "https://www.geeksforgeeks.org/",
-               "https://www.python.org/",
-               "https://nodejs.org/en",
-               "https://developer.mozilla.org/",
-               "https://www.javascripttutorial.net/",
-               "https://dev.java/",
-               "https://dev.to/",
-               "https://medium.com/"]
+    allowed_domains = ["www.youtube.com",
+                       "youtube.com",
+                       "stackoverflow.com",
+                       "stackoverflow.blog",
+                       "github.com",
+                       "www.geeksforgeeks.org",
+                       "www.python.org",
+                       "nodejs.org",
+                       "developer.mozilla.org",
+                       "www.javascripttutorial.net",
+                       "dev.java",
+                       "dev.to",
+                       "medium.com"]
 
-    async def valid_domain(url: str) -> bool:
-        return False if url not in domains else True
+    def check_message() -> None:
 
-    async def check_message() -> None:
+        def compar_urls(domain: str) -> bool:
+            return True if domain in allowed_domains else False
 
-        for word in await get_words(message):
+        for web_link in get_all_links(message):
 
-            if await check_url(word):
-
-                if not await valid_domain(word):
-
-                    raise InvalidMessageError(Invalid.LINK,
-                                              "Endereço de URL nao permitido")
+            if not compar_urls(get_domain(web_link)):
+                raise InvalidMessageError(Invalid.LINK,
+                                          f"Web link '{web_link}' nao permitido!")
 
     return check_message
