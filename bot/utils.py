@@ -1,7 +1,7 @@
 import re
 
 
-def check_url(text):
+async def check_url(text) -> bool:
     return True if re.match(
         r"(https?|ftp)://"
         r"(\w+(\-\w+)*\.)?"
@@ -10,6 +10,6 @@ def check_url(text):
         r"([\w\-\._\~/]*)*(?<!\.)", text) else False
 
 
-def get_words(text):
+async def get_words(text) -> list[str]:
     return re.sub(
         '[,@_!#$%^&*()<>?\\|\\[\\]}{~]', ' ', text).split()
