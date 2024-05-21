@@ -1,22 +1,6 @@
 from utils import get_all_links, get_domain
-from enum import Enum
-
-
-class Invalid(Enum):
-    WORD = 1
-    LINK = 2
-
-
-class InvalidMessageError(Exception):
-
-    def __init__(self, type: Invalid, message: str):
-
-        self.type: Invalid = type
-
-        self.message: str = message
-
-    def __str__(self):
-        return self.message
+# from exceptions.custom_errors import InvalidMessageError, Invalid
+from exceptions.custom_errors import InvalidMessageError, Invalid
 
 
 def message_mining(message):

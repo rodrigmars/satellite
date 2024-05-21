@@ -1,6 +1,6 @@
 
 import os
-from infra.db_models.db_base import get_connection, init_db
+from bot.infra.data_base.db import get_connection, init_db
 
 from discord import Client, Intents, Guild, Game
 from discord.message import Message
