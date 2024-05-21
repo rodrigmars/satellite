@@ -1,5 +1,4 @@
 from utils import get_all_links, get_domain
-# from exceptions.custom_errors import InvalidMessageError, Invalid
 from exceptions.custom_errors import InvalidMessageError, Invalid
 
 

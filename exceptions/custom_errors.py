@@ -1,9 +1,4 @@
-from enum import Enum
-
-
-class Invalid(Enum):
-    WORD = 1
-    LINK = 2
+from bot.enums import Invalid
 
 
 class InvalidMessageError(Exception):
@@ -11,6 +6,16 @@ class InvalidMessageError(Exception):
     def __init__(self, type: Invalid, message: str):
 
         self.type: Invalid = type
+
+        self.message: str = message
+
+    def __str__(self):
+        return self.message
+
+
+class RepositoryError(Exception):
+
+    def __init__(self, message: str):
 
         self.message: str = message
 

@@ -1,11 +1,13 @@
-from sqlite3 import Connection
+from sqlite3 import Connection, Cursor
+from typing import Any
 
 
 def repository(conn: Connection):
 
     cursor = conn.cursor()
 
-    def execute(query: str):
+    def execute(query: str) -> bool:
+        status = True
 
         try:
 
@@ -14,22 +16,36 @@ def repository(conn: Connection):
             conn.commit()
 
         except Exception as ex:
+            print("ERRO>>>>>", ex)
+            status = False
             conn.rollback()
 
         finally:
+
             cursor.close()
             conn.close()
 
-    def get(query: str, conn: Connection):
+            return status
+
+    def fetch_one(query: str) -> tuple:
+
+        status = True
 
         try:
+
             cursor.execute(query)
 
+            data = cursor.fetchone()
+
         except Exception as ex:
+
+            status = False
             pass
 
         finally:
             cursor.close()
             conn.close()
 
-    return execute, get
+            return status, data
+
+    return {"execute": execute, "fetch_one": fetch_one}
